@@ -4,14 +4,18 @@ def imageData = getCurrentImageData()
 
 // Define output path (relative to project)
 def name = GeneralTools.getNameWithoutExtension(imageData.getServer().getMetadata().getName())
-def pathOutput = buildFilePath(PROJECT_BASE_DIR, '224Px', name)
+def pathOutput = buildFilePath(PROJECT_BASE_DIR, '224Px_calibrated', name)
 mkdirs(pathOutput)
 
 // Tile side length in pixels
 int tileSideLength = 224
 
+// Define output resolution in calibrated units
+double requestedPixelSize = 0.2520
+
 // 1 is full resolution
-double downsample = 1
+double pixelSize = imageData.getServer().getPixelCalibration().getAveragedPixelSize()
+double downsample = requestedPixelSize / pixelSize
 
 // Create an ImageServer where the pixels are derived from annotations
 def labelServer = new LabeledImageServer.Builder(imageData)
