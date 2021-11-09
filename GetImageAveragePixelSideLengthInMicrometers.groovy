@@ -1,0 +1,5 @@
+def imageData = getCurrentImageData()
+def name = GeneralTools.getNameWithoutExtension(imageData.getServer().getMetadata().getName())
+print(name)
+double pixelSize = imageData.getServer().getPixelCalibration().getAveragedPixelSize()
+print(pixelSize)
